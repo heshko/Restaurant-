@@ -10,15 +10,16 @@ namespace Restaurant
     {
         static void Main(string[] args)
         {
-            RestaurantX restaurant = new RestaurantX("MaxDonalds");
+            RestaurantX restaurant = new RestaurantX("MaxDonalds", new CookMaster5000());
 
             bool shouldNotExit = true;
 
             while (shouldNotExit)
             {
                 WriteLine("1. Register order");
-                WriteLine("2. List orders");
-                WriteLine("3. Exit");
+                WriteLine("2. List pending orders");
+                WriteLine("3. Process orders");
+                WriteLine("4. Exit");
 
                 ConsoleKeyInfo keyPressed = ReadKey(true);
 
@@ -48,24 +49,38 @@ namespace Restaurant
                         Thread.Sleep(2000); // 2 sek
 
                         break;
+
                     case ConsoleKey.D2:
                     case ConsoleKey.NumPad2:
+
                         WriteLine("Table Dish                            Registered");
                         WriteLine("------------------------------------------------------------");
-
 
                         foreach (Order order in restaurant.OrderQueue)
                         {
                             WriteLine($"{order.Table}  {order.Dish}                    {order.RegisteredAt}");
-
                         }
+
                         WriteLine();
                         WriteLine("Press key to continue");
+
                         ReadKey();
 
                         break;
+
                     case ConsoleKey.D3:
                     case ConsoleKey.NumPad3:
+
+                        var completedOrders = restaurant.ProcessOrders();
+
+                        WriteLine("All orders processed");
+
+                        Thread.Sleep(2000);
+
+                        break;
+
+                    case ConsoleKey.D4:
+                    case ConsoleKey.NumPad4:
 
                         shouldNotExit = false;
 
